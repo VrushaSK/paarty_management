@@ -1,0 +1,64 @@
+<div class="party-list-container" *ngIf="showList">
+    <!-- Add Button -->
+ <div class="text-right mb-3">
+   <button class="btn btn-primary" (click)="navigateToAddParty()">Add Party</button>
+ </div>
+   <div *ngIf="parties.length == 0" style="text-align:center"><h3>No Party To Show</h3></div>
+   <div *ngIf="parties.length>0">
+   <table class="table">
+     <thead>
+       <tr>
+         <th>ID</th>
+         <th>Name</th>
+         <th>Date</th>
+         <th>Actions</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr *ngFor="let party of parties; let i = index">
+         <td>{{ i+1 }}</td>
+         <td>{{ party.name }}</td>
+         <td>{{ party.date }}</td>
+         <td>
+           <button (click)="editParty(party.id,party.name,party.date)" class="btn btn-warning">Edit</button>
+           <button (click)="deleteParty(party.id)" class="btn btn-danger">Delete</button>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+  </div>
+ </div>
+ <div class="container mt-4" *ngIf="!showList">
+  <h2>{{ isEditMode ? 'Edit Party' : 'Add New Party' }}</h2>
+
+  <!-- Form binding to the partyForm FormGroup -->
+  <form [formGroup]="partyForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Party Name Input -->
+    <div class="form-group">
+      <label for="name">Party Name</label><br>
+      <input type="text" id="name" class="form-control" formControlName="name"><br><br>
+      
+      <!-- Validation Error Message -->
+      <div *ngIf="partyForm.controls['name'].invalid && partyForm.controls['name'].touched" class="text-danger">
+        Party name is required.
+      </div>
+    </div>
+           
+    <!-- Date Input -->
+    <div class="form-group">
+      <label for="date">Date</label><br>
+      <input type="date" id="date" class="form-control" formControlName="date">
+      
+      <!-- Validation Error Me1 ssage -->
+      <div *ngIf="partyForm.controls['date'].invalid && partyForm.controls['date'].touched" class="text-danger">
+        Date is required.
+      </div>
+    </div><br>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="partyForm.invalid">
+      {{ isEditMode ? 'Edit' : 'Add New' }} Party
+    </button>
+  </form>
+</div>
