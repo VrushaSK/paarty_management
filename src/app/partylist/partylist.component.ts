@@ -114,7 +114,7 @@ editName:string='';
 }
 else{
   console.log("in edit",this.editID);
-  this.http.put('https://tolearnhttp-default-rtdb.firebaseio.com//party/'+this.editID+'.json', this.partyForm.value).subscribe(
+  this.http.put('https://tolearnhttp-default-rtdb.firebaseio.com/party/'+this.editID+'.json', this.partyForm.value).subscribe(
   (response)=>{
      console.log("edited");
      this.isEditMode = false;
